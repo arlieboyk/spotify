@@ -1,0 +1,15 @@
+.button--xs {
+  @apply h-8 px-2 py-1;
+}
+
+.button--sm {
+  @apply h-10  px-4 py-1;
+}
+
+.button--md {
+  @apply h-12 px-6;
+}
+
+.button--md {
+  @apply h-14 px-8;
+}
