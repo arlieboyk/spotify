@@ -1,10 +1,9 @@
 'use client'
-import Button from '@/app/components/Button'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { signIn } from 'next-auth/react'
-import Link from 'next/link'
-import React from 'react'
+import Button from '@/app/components/Button'
 import { inputs } from '@/utils/constant/forms'
 type FormInputs = {
   email: string
@@ -12,6 +11,7 @@ type FormInputs = {
 }
 
 export default function Signin() {
+  const [_providers, setProviders] = useState<any>()
   const router = useRouter()
   const {
     register,
@@ -24,10 +24,12 @@ export default function Signin() {
     const loginData = {
       email: data.email,
       password: data.password,
-      // callbackUrl: '/',
+      callbackUrl: '/',
       // redirect: false,
     }
-    const login = await signIn('credentials', loginData)
+    const login = await signIn('credentials', loginData, {
+      login_hint: 'info@example.com',
+    })
     console.log(login)
     if (login?.ok && login.url !== null) {
       router.push(login.url + '/test')
@@ -50,35 +52,21 @@ export default function Signin() {
         <div className="w-1/2 rounded bg-white"></div>
         <div className="flex w-1/2 flex-col place-items-center justify-between gap-y-2 rounded bg-blue-primary p-6 md:p-12">
           {/* button  */}
-          <div className="flex flex-nowrap space-x-4">
-            {/* TODO make a component for this since it will be resused in header */}
-            <Button
-              key={'signin'}
-              size="sm"
-              className="whitespace-nowrap rounded-md bg-pink-500 text-white"
-            >
-              Sign In
-            </Button>
-            <Button
-              key={'signup'}
-              onClick={signUpRoute}
-              size="sm"
-              className="whitespace-nowrap rounded-md bg-orange-500 text-white"
-            >
-              Sign Up
-            </Button>
-          </div>
           {/* icons */}
           <div className="flex space-x-2">
             <div className="h-8 w-8 rounded-full border-2 border-orange-400"></div>
             <div className="h-8 w-8 rounded-full border-2 border-orange-400"></div>
             <div className="h-8 w-8 rounded-full border-2 border-orange-400"></div>
           </div>
-          <span className="text-center text-white">
-            lorem ipsum media accounts
-          </span>
-
+          <Button
+            size="md"
+            onClick={() => signIn('spotify', { callbackUrl: '/' })}
+            className=" bg-[#1ED760]"
+          >
+            Sign in with Spotify
+          </Button>
           <div className="h-[1.5px]  w-full bg-slate-400" />
+          or
           <form
             onSubmit={handleSubmit(handleSignIn, handleSignInError)}
             action=""
@@ -130,7 +118,6 @@ export default function Signin() {
               Sign In
             </Button>
           </form>
-
           <div className="mt-5 flex w-full flex-col ">
             <span className="text-center text-white">
               Doesn&apos;t have an account?&nbsp;

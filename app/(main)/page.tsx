@@ -4,7 +4,7 @@ import { SpotifyTrack } from '@/typings'
 import { getArtis } from '@/utils/filter'
 import React from 'react'
 import Link from 'next/link'
-import SignIn from '../components/SignIn'
+import { SignIn, Signout } from '../components/AuthButtons'
 type User = {
   user: {
     name?: string
@@ -26,10 +26,9 @@ export default async function Home() {
     <div className="rgba-[--background]">
       <div className="bg-blue-darker text-blue-primary">test</div>
       <SignIn />
+      <Signout />
       <kbd>test</kbd>
-      <kbd>test</kbd>
-      <kbd>test</kbd>
-      <kbd>test</kbd>
+
       <div className="h-full border text-white">
         <div className="flex flex-col rounded border">
           {topTracks?.map(({ name, artists }, idx) => (

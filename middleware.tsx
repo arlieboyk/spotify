@@ -7,7 +7,7 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const session = null
   //   if (session) {
-  console.log(request)
+  // console.log(request)
   //   return NextResponse.redirect(new URL('/auth/signin', request.url))
   //   }
 }
